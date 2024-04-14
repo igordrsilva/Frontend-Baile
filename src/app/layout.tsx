@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +17,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="pt-BR">
+      <head>
+        <meta charSet="UTF-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        />
+        <title>Voto Popular CLJ</title>
+      </head>
+      <body suppressHydrationWarning={true}>
+        <div className="min-h-screen h-screen overflow-hidden dark:bg-boxdark-2 dark:text-bodydark">
+          {children}
+        </div>
+        <ToastContainer />
+      </body>
     </html>
   );
 }
