@@ -26,7 +26,7 @@ export default function Home() {
       };
 
       console.log(json);
-      console.log(`${process.env.BASE_URL}/imagem`);
+      console.log(`${process.env.BASE_URL}/usuario`);
 
       try {
         const response = await fetch(
