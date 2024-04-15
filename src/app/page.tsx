@@ -26,11 +26,11 @@ export default function Home() {
       };
 
       console.log(json);
-      console.log(`${process.env.BASE_URL}/usuari`);
+      console.log(`${process.env.BASE_URL}/usuario`);
 
       try {
         const response = await fetch(
-          `${process.env.BASE_URL}/usuario`,
+          `${process.env.BASE_URL}/usuari`,
           {
             method: 'POST',
             headers: {
