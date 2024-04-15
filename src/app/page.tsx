@@ -49,8 +49,11 @@ export default function Home() {
           // salvar fetchedData nos cookies
           // add um timer de 1.5s
           router.push('/votar');
+        } else {
+          toast.error('Erro no envio!');
         }
       } catch (error) {
+        toast.error('Erro no envio!');
         console.log(JSON.stringify(json));
         console.error('Error fetching data:', error);
       }
