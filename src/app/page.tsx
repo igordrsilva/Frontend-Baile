@@ -30,7 +30,7 @@ export default function Home() {
 
       try {
         const response = await fetch(
-          `${process.env.BASE_URL}/usuari`,
+          `${process.env.BASE_URL}/usuario`,
           {
             method: 'POST',
             headers: {
