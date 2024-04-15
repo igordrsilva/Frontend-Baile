@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import { useRef, useState } from "react";
-import { IoCheckmark } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import { Slide, toast } from 'react-toastify';
 import RootLayout from './layout';
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -46,7 +46,11 @@ export default function Home() {
         if (response.ok) {
           toast.success('Enviado com sucesso!');
           const fetchedData = await response.json();
-          // salvar fetchedData nos cookies
+          Cookies.set('id_usuario', fetchedData.id_usuario, { expires: 1 / 48 });
+          Cookies.set('nome_usuario', fetchedData.nome_usuario, { expires: 1 / 48 });
+          Cookies.set('email', fetchedData.email, { expires: 1 / 48 });
+          Cookies.set('paroquia_capela', fetchedData.paroquia_capela, { expires: 1 / 48 });
+          Cookies.set('votou', fetchedData.votou, { expires: 1 / 48 });
           // add um timer de 1.5s
           router.push('/votar');
         } else {
@@ -61,50 +65,34 @@ export default function Home() {
   }
 
   return (
-    <div className="h-full bg-stone-200">
+    <div className="h-full bg-stone-200 flex justify-center items-center">
+      <div className="w-full flex flex-wrap justify-center items-center">
 
-      <div className="mx-auto bg-zinc-800 flex justify-center">
-        <div className="w-4/5 flex justify-between items-center py-6">
-          <div className="w-full flex items-center text-white justify-between">
-            <div className="flex">
-              <a href="/cadastrar-imagem" className="flex items-center font-normal hover:text-gray-300 ml-10 text-xl tracking-tight">
-                Cadastrar Fantasia
-              </a>
-              <a href="/votar" className="flex items-center font-normal hover:text-gray-300 ml-10 text-xl tracking-tight">
-                Votar
-              </a>
-            </div>
-          </div>
+        <div className="w-4/5 flex flex-wrap justify-center">
+          <img src="clj.png" alt="logo-clj" className="h-auto w-auto max-h-32" />
         </div>
-      </div>
 
-      <div className="mt-10 flex justify-center items-center">
-        <div className="w-full flex flex-wrap justify-center items-center">
+        <div className="w-4/5 flex flex-wrap justify-center">
+          <h1 className="font-medium text-3xl text-zinc-800 ">Preencha seus dados básicos</h1>
+        </div>
 
-          <div className="w-4/5 flex flex-wrap justify-center">
-            <img src="clj.png" alt="logo-clj" className="h-auto w-auto max-h-32" />
-          </div>
-
-          <div className="w-4/5 flex flex-wrap justify-center">
-            <h1 className="font-medium text-3xl text-zinc-800 ">Preencha seus dados básicos</h1>
-          </div>
-
+        <div className="w-4/5 flex flex-wrap justify-center">
           <div className="flex flex-wrap justify-center mt-4 w-full text-zinc-800">
-            <input className="bg-stone-400 w-2/5 px-4 py-1 rounded-lg text-zinc-800 font-medium outline-none placeholder:text-zinc-600 placeholder:text-center text-center placeholder:font-normal" type="text" name="email" id="email" placeholder="Email" onChange={(e: any) => {
+            <input className="bg-stone-400 w-4/5 px-4 py-1 rounded-lg text-zinc-800 font-medium outline-none placeholder:text-zinc-600 placeholder:text-center text-center placeholder:font-normal" type="text" name="email" id="email" placeholder="Email" onChange={(e: any) => {
               SetVazio(false)
               setEmail(e.target.value);
             }} />
           </div>
 
           <div className="flex flex-wrap justify-center mt-4 w-full text-zinc-800">
-            <input className="bg-stone-400 w-2/5 px-4 py-1 rounded-lg text-zinc-800 font-medium outline-none placeholder:text-zinc-600 placeholder:text-center placeholder:font-normal text-center" type="text" name="nome" id="nome" placeholder="Nome Completo" onChange={(e: any) => {
+            <input className="bg-stone-400 w-4/5 px-4 py-1 rounded-lg text-zinc-800 font-medium outline-none placeholder:text-zinc-600 placeholder:text-center placeholder:font-normal text-center" type="text" name="nome" id="nome" placeholder="Nome Completo" onChange={(e: any) => {
               SetVazio(false)
               setNomeUsuario(e.target.value);
             }} />
           </div>
 
           <div className="flex flex-wrap justify-center mt-4 w-full text-zinc-800">
-            <input className="bg-stone-400 w-2/5 px-4 py-1 rounded-lg text-zinc-800 font-medium outline-none placeholder:text-zinc-600 placeholder:text-center text-center placeholder:font-normal" type="text" name="paroquia-capela" id="paroquia-capela" placeholder="Paróquia/Capela - Cidade" onChange={(e: any) => {
+            <input className="bg-stone-400 w-4/5 px-4 py-1 rounded-lg text-zinc-800 font-medium outline-none placeholder:text-zinc-600 placeholder:text-center text-center placeholder:font-normal" type="text" name="paroquia-capela" id="paroquia-capela" placeholder="Paróquia/Capela - Cidade" onChange={(e: any) => {
               SetVazio(false)
               setParoquiaCapela(e.target.value);
             }} />
@@ -120,6 +108,8 @@ export default function Home() {
             </button>
           </div>
         </div>
+
+
       </div>
     </div>
   );

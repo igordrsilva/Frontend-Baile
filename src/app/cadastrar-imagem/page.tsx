@@ -1,15 +1,43 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CgProfile } from "react-icons/cg";
 import { IoCheckmark } from "react-icons/io5";
 import { MdOutlineDriveFolderUpload } from "react-icons/md";
 import { Slide, toast } from "react-toastify";
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const [imagemCarregada, setImagemCarregada] = useState(false);
   const [imagem, setImagem] = useState('');
   const [descricaoImagem, setDescricaoImagem] = useState('');
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [dadosUsuario, setDadosUsuario] = useState({
+    id_usuario: '',
+    nome_usuario: '',
+    email: '',
+    paroquia_capela: '',
+    votou: ''
+  });
+
+  useEffect(() => {
+    const id_usuario = Cookies.get('id_usuario');
+    const nome_usuario = Cookies.get('nome_usuario');
+    const email = Cookies.get('email');
+    const paroquia_capela = Cookies.get('paroquia_capela');
+    const votou = Cookies.get('votou');
+
+    if (id_usuario && nome_usuario && email && paroquia_capela && votou) {
+      setDadosUsuario({
+        id_usuario: id_usuario,
+        nome_usuario: nome_usuario,
+        email: email,
+        paroquia_capela: paroquia_capela,
+        votou: votou
+      });
+    }
+  }, []);
 
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -41,9 +69,6 @@ export default function Home() {
       descricao_imagem: descricaoImagem,
       id_usuario: 2
     };
-
-    console.log(json);
-    console.log(`${process.env.BASE_URL}/imagem`);
 
     try {
       const response = await fetch(
@@ -78,11 +103,6 @@ export default function Home() {
         console.log('Post imagem concluído!');
       }
     } catch (error) {
-      console.log(JSON.stringify({
-        upload_imagem: imagem,
-        descricao_imagem: descricaoImagem,
-        id_usuario: 2
-      }));
       console.error('Error fetching data:', error);
       return false;
     }
@@ -101,6 +121,10 @@ export default function Home() {
               <a href="/votar" className="flex items-center font-normal hover:text-gray-300 ml-10 text-xl tracking-tight">
                 Votar
               </a>
+            </div>
+            <div className="flex justify-normal items-center">
+              <CgProfile size={25} />
+              <p className="font-normal text-xl ml-2">{dadosUsuario.nome_usuario}</p>
             </div>
           </div>
         </div>
