@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { Slide, toast } from 'react-toastify';
 import RootLayout from './layout';
@@ -12,6 +12,21 @@ export default function Home() {
   const [paroquiaCapela, setParoquiaCapela] = useState('');
   const [vazio, SetVazio] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const getInitial = async () => {
+      const response = await fetch(
+        `${process.env.BASE_URL}/usuario`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+    };
+    getInitial();
+  })
 
   const handleSalvarImagem = async () => {
     if (!email || !nomeUsuario || !paroquiaCapela) {

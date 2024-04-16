@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -31,6 +32,37 @@ export default function RootLayout({
           {children}
         </div>
         <ToastContainer />
+        {/* <footer className="lg:bg-zinc-800 lg:flex lg:justify-center lg:items-center">
+          <div className="lg:w-4/5 lg:h-auto lg:py-8 lg:px-20 lg:flex lg:flex-wrap lg:justify-between">
+            <div className="lg:flex lg:flex-col lg:flex-wrap lg:items-start">
+              <div className="lg:flex lg:flex-wrap hidden">
+                <div>
+                  <img src="nh.png" alt="Logo Diocese de Novo Hamburgo" className="w-40 h-auto" />
+                </div>
+                <div>
+                  <div className="lg:flex lg:flex-wrap lg:flex-col">
+                    <a href="https://cljdiocesenh.com.br" className="text-xl font-bold mb-2 text-white">CLJ Diocese de Novo Hamburgo</a>
+                    <a href="https://cljdiocesenh.com.br/historia/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">História</a>
+                    <a href="https://cljdiocesenh.com.br/quem-somos/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Quem Somos</a>
+                    <a href="https://cljdiocesenh.com.br/download/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Download</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="lg:flex lg:flex-wrap lg:flex-col lg:items-start">
+              <a href="https://cljdiocesenh.com.br/presidencia/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Coordenação Diocesana</a>
+              <a href="https://cljdiocesenh.com.br/diretor-espiritual/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Diretores Espirituais</a>
+              <a href="https://cljdiocesenh.com.br/formadores/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Formadores</a>
+              <a href="https://cljdiocesenh.com.br/grupos/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Grupos</a>
+              <a href="https://cljdiocesenh.com.br/departamentos/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Departamentos</a>
+            </div>
+            <div className="lg:flex lg:flex-col lg:flex-wrap items-start mt-2">
+              <a href="https://cljdiocesenh.com.br/category/diocesaninho/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Diocesaninho</a>
+              <a href="https://cljdiocesenh.com.br/category/blog/" className="text-base font-normal mb-1 text-stone-300 hover:text-white">Blog</a>
+            </div>
+          </div>
+        </footer> */}
+
       </body>
     </html>
   );

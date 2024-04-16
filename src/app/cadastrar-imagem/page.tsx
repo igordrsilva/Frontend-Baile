@@ -7,12 +7,17 @@ import { IoCheckmark } from "react-icons/io5";
 import { MdOutlineDriveFolderUpload } from "react-icons/md";
 import { Slide, toast } from "react-toastify";
 import Cookies from 'js-cookie';
+import { redirect } from "next/navigation";
+import { DiVim } from "react-icons/di";
+import { TiInfoOutline } from "react-icons/ti";
 
 export default function Home() {
   const [imagemCarregada, setImagemCarregada] = useState(false);
   const [imagem, setImagem] = useState('');
   const [descricaoImagem, setDescricaoImagem] = useState('');
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [abaAberta, setAbaAberta] = useState(false);
+  const [retornou, setRetornou] = useState(true);
   const [dadosUsuario, setDadosUsuario] = useState({
     id_usuario: '',
     nome_usuario: '',
@@ -36,10 +41,20 @@ export default function Home() {
         paroquia_capela: paroquia_capela,
         votou: votou
       });
+    } else {
+      redirect('/');
     }
   }, []);
 
   const inputFileRef = useRef<HTMLInputElement>(null);
+
+  const abrirAba = () => {
+    setAbaAberta(true);
+  };
+
+  const fecharAba = () => {
+    setAbaAberta(false);
+  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -64,6 +79,7 @@ export default function Home() {
   };
 
   const handleSalvarImagem = async () => {
+    setRetornou(false);
     const json = {
       upload_imagem: imagem,
       descricao_imagem: descricaoImagem,
@@ -101,6 +117,7 @@ export default function Home() {
         const fetchedData = await response.json();
         console.log(fetchedData);
         console.log('Post imagem concluído!');
+        setRetornou(true);
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -122,9 +139,22 @@ export default function Home() {
                 Votar
               </a>
             </div>
-            <div className="flex justify-normal items-center">
-              <CgProfile size={25} />
-              <p className="font-normal text-xl ml-2">{dadosUsuario.nome_usuario}</p>
+            <div className="relative">
+              <div className="flex justify-normal items-center" onMouseEnter={abrirAba} onMouseLeave={fecharAba}>
+                <CgProfile size={30} />
+                <div>
+                  <p className="font-bold text-base ml-2">{dadosUsuario.nome_usuario}</p>
+                  <p className="font-normal text-xs ml-2">{dadosUsuario.paroquia_capela}</p>
+                </div>
+
+              </div>
+              {abaAberta && (
+                <div className="absolute top-full mt-2 left-0 bg-white border border-gray-300 p-4 rounded-xl shadow" onMouseEnter={abrirAba} onMouseLeave={fecharAba} style={{ width: 'auto', whiteSpace: 'nowrap' }}>
+                  <p className="text-zinc-800 font-bold">{dadosUsuario.nome_usuario}</p>
+                  <p className="text-zinc-800 font-medium">{dadosUsuario.email}</p>
+                  <p className="text-zinc-800 font-medium">{dadosUsuario.paroquia_capela}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -159,6 +189,10 @@ export default function Home() {
                   Salvar
                 </button>
               </div>
+              {retornou ? (<div className="flex flex-wrap justify-center mt-4 w-full text-zinc-800">
+                <TiInfoOutline size={25} />
+                <p className=" font-medium border-l-2 pl-2">Aguarde até que a imagem seja salva...</p>
+              </div>) : (<div></div>)}
 
             </div>
           ) : (
